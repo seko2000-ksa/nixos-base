@@ -98,6 +98,10 @@
     #libsForQt5.qtstyleplugin-kvantum
     #libsForQt5.qt5ct
     nixd
+    far2l
+    ledger
+    superfile
+    bat
   ];
 
   fonts.packages = with pkgs; [
