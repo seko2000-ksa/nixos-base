@@ -3,7 +3,9 @@
 {
   imports =
     [
-      ./hardware-configuration.nix
+      /etc/nixos/hardware-configuration.nix
+      ./packages.nix
+      ./modules/bundle.nix
     ];
 
   boot.loader.systemd-boot.enable = true;
@@ -13,28 +15,25 @@
   networking.networkmanager.enable = true;
 
   time.timeZone = "Europe/Moscow";
+  i18n.defaultLocale = "en_US.UTF-8"; # Select internationalisation properties.
 
   users.users.ksa = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
     packages = with pkgs; [
-      tree
+      niri
     ];
   };
 
-  programs.chromium.enable = true;
+  programs.niri.enable = true;
 
-  environment.systemPackages = with pkgs; [
-    vim
-    wget
-    git
-    alacritty
-    fzf
-  ];
-
-  fonts.packages = with pkgs; [
-    nerd-fonts.jetbrains-mono
-  ];
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+    extraPackages = with pkgs; [
+      mesa
+    ];
+  };
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   system.stateVersion = "25.11";
